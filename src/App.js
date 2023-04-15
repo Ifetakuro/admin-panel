@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import CustomerSupport from "./pages/CustomerSupport";
+import UserManagement from "./pages/UserManagement";
+import Layout from "./components/Layout";
+import NotFound from "./pages/404";
+import { Suspense } from "react";
+import { AuthContext, AuthProvider } from "./authentication/AuthContext";
+import { useContext } from "react";
+import Login from "./pages/Login";
+import ProtectedRoutes from "./authentication/ProtectedRoute";
+import AccessDenied from "./pages/AccessDenied";
+
+const PrivateRoutes = ({ children, ...rest }) => {
+  let auth;
+
+  const _user = localStorage.getItem("user");
+  if (_user) {
+    auth = JSON.parse(_user).auth;
+  }
+
+  return !auth ? (
+    <Navigate to="/login" replace={true} />
+  ) : (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={"..loading"}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Login />} path={"/login"} exact />
+            <Route element={<PrivateRoutes />}>
+              <Route element={<Dashboard />} path="/" exact />
+              <Route
+                element={<UserManagement />}
+                exact
+                path="/user-management"
+              />
+              <Route
+                element={<CustomerSupport />}
+                path="/customer-support"
+                exact
+              />
+            </Route>
+            <Route element={<NotFound />} path={"*"} exact />
+            <Route element={<AccessDenied />} path={"./access-denied"} exact />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </Suspense>
   );
 }
 

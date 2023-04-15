@@ -1,0 +1,27 @@
+.alert {
+  width: 200px;
+
+  .alert-header {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.475);
+  }
+  &.success {
+    background-color: rgba(163, 249, 163, 0.655);
+    .alert-header {
+      h3 {
+        font-weight: 500;
+        color: rgb(1, 72, 1);
+      }
+    }
+  }
+
+  &.error {
+    background-color: rgba(251, 153, 153, 0.65);
+
+    .alert-header {
+      h3 {
+        font-weight: 500;
+        color: rgb(122, 4, 4);
+      }
+    }
+  }
+}

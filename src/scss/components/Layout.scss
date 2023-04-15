@@ -1,0 +1,27 @@
+.layout {
+  transition: all 0.3s ease-in-out !important;
+  .header {
+    grid-area: header;
+  }
+  .sidebar {
+    grid-area: sidebar;
+  }
+  .content {
+    grid-area: content;
+  }
+
+  //   display: grid;
+  min-height: 100vh;
+  //   grid-template-columns: 250px 4fr 1fr;
+  //   grid-template-rows: auto 1fr;
+  //   grid-template-areas:
+  //     "header header header header header header header"
+  //     "sidebar content content content content content content";
+
+  //   @media screen and (max-width: 768px) {
+  //     grid-template-columns: 53px 4fr 1fr;
+  //   }
+}
+// .layout.toggle {
+//   grid-template-columns: 53px 4fr 1fr;
+// }
