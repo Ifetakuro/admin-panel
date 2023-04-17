@@ -19,15 +19,7 @@ const useRole = () => {
 
 const PermissionedPage = ({ roleRequired, children }) => {
   const role = useRole();
-  return (
-    <>
-      {roleRequired === role ? (
-        children
-      ) : (
-        <Navigate to="/access-denied" replace={true} />
-      )}
-    </>
-  );
+  return <>{roleRequired === role ? children : <PermissionDenied />}</>;
 };
 
 export default PermissionedPage;
