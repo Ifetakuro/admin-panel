@@ -85,6 +85,7 @@ const Login = ({ location }) => {
                       : "")
                   }
                 />
+                <ErrorMessage name="username" component="div" />
               </div>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
@@ -99,6 +100,7 @@ const Login = ({ location }) => {
                       : "")
                   }
                 />
+                <ErrorMessage name="password" component="div" />
               </div>
               <div className="form-group">
                 <button type="submit" className="btn" disabled={isSubmitting}>
@@ -106,6 +108,7 @@ const Login = ({ location }) => {
                 </button>
                 {isSubmitting && <p>Submitting</p>}
               </div>
+
               {status && <div className={"alert alert-danger"}>{status}</div>}
             </Form>
           )}
@@ -113,6 +116,11 @@ const Login = ({ location }) => {
       </div>
       <div className="logo-div">
         <h1>Admin Panel</h1>
+        <p>
+          username: Manager &nbsp;&nbsp; password: Manager <br /> username:
+          Admin &nbsp;&nbsp; password: Admin <br />
+          username: Developer &nbsp;&nbsp; password: Developer
+        </p>
       </div>
     </div>
   );

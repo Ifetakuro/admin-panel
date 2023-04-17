@@ -1,6 +1,6 @@
 const PermissionDenied = () => {
   return (
-    <div>
+    <div className="denied">
       <h2>Permission denied!</h2>
     </div>
   );

@@ -1,0 +1,8 @@
+.tickets {
+  display: grid;
+  grid-template: auto / repeat(auto-fit, minmax(15rem, 1fr));
+  //   display: flex;
+  //   align-items: center;
+  //   flex-wrap: wrap;
+  gap: 1rem;
+}

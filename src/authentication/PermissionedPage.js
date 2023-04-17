@@ -1,5 +1,6 @@
 import React from "react";
 import PermissionDenied from "../components/PermissionDenied";
+import { Navigate } from "react-router-dom";
 
 const useRole = () => {
   let user;
@@ -18,7 +19,15 @@ const useRole = () => {
 
 const PermissionedPage = ({ roleRequired, children }) => {
   const role = useRole();
-  return <>{roleRequired === role ? children : <PermissionDenied />}</>;
+  return (
+    <>
+      {roleRequired === role ? (
+        children
+      ) : (
+        <Navigate to="/access-denied" replace={true} />
+      )}
+    </>
+  );
 };
 
 export default PermissionedPage;

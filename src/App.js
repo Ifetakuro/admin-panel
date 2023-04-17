@@ -4,6 +4,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import CustomerSupport from "./pages/CustomerSupport";
@@ -16,9 +17,11 @@ import { useContext } from "react";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./authentication/ProtectedRoute";
 import AccessDenied from "./pages/AccessDenied";
+import Tickets from "./pages/Tickets";
 
 const PrivateRoutes = ({ children, ...rest }) => {
   let auth;
+  const navigate = useNavigate();
 
   const _user = localStorage.getItem("user");
   if (_user) {
@@ -53,6 +56,7 @@ function App() {
                 path="/customer-support"
                 exact
               />
+              <Route element={<Tickets />} path="/tickets" exact />
             </Route>
             <Route element={<NotFound />} path={"*"} exact />
             <Route element={<AccessDenied />} path={"./access-denied"} exact />

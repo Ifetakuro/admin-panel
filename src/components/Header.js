@@ -4,9 +4,12 @@ import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 import { useContext } from "react";
 import { AuthContext } from "../authentication/AuthContext";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ collapse, onClick }) => {
   let user;
+  const navigate = useNavigate();
+
   const _user = localStorage.getItem("user");
   if (_user) {
     user = JSON.parse(_user);
@@ -14,7 +17,9 @@ const Header = ({ collapse, onClick }) => {
 
   const Logout = () => {
     localStorage.removeItem("user");
+    navigate("/login");
   };
+
   return (
     <header className="header">
       <div className="header-div">

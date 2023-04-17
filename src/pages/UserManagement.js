@@ -6,8 +6,8 @@ const UserManagement = () => {
   return (
     <PermissionedPage roleRequired="MANAGER">
       <div className="user-mgt">
-        <h1>Welcome Admin!</h1>
-        <button>User Magement</button>
+        <h1>Welcome User Management</h1>
+        Only Manager have access to this page
       </div>
     </PermissionedPage>
   );
