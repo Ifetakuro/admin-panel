@@ -159,6 +159,7 @@ function Tickets() {
               setAssignee={setAssignee}
               handleSubmit={handleSubmit}
               extraClass={"slide"}
+              submitBtnText={"Add"}
             />
           )}
         </div>

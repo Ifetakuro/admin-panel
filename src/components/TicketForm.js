@@ -16,6 +16,7 @@ const TicketForm = ({
   setAssignee,
   onClick,
   extraClass,
+  submitBtnText,
 }) => {
   const { users } = useContext(AuthContext);
   const disable =
@@ -71,7 +72,7 @@ const TicketForm = ({
         </div>
         <div className="btn-div">
           <CustomButton type="submit" disabled={disable}>
-            Add
+            {submitBtnText}
           </CustomButton>
           <CustomButton type="button" onClick={onClick}>
             Close Form

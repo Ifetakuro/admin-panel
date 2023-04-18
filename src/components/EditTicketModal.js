@@ -49,6 +49,7 @@ const EditTicketModal = ({
           assignee={editedAssignee}
           setAssignee={setEditedAssignee}
           onClick={onClick}
+          submitBtnText={"Edit"}
         />
       </Modal>
     );
