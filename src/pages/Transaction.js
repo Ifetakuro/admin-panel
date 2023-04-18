@@ -6,7 +6,6 @@ const Transaction = () => {
     <div>
       <h1>Welcome to Transaction</h1>
       Developers, Managers and Admin have access to this page
-      <Loader />
     </div>
   );
 };
