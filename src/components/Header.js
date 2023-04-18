@@ -5,8 +5,12 @@ import { useContext } from "react";
 import { AuthContext } from "../authentication/AuthContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 const Header = ({ collapse, onClick }) => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   let user;
   const navigate = useNavigate();
 
@@ -30,7 +34,19 @@ const Header = ({ collapse, onClick }) => {
           <BsArrowLeftCircleFill className="svg-btn" onClick={onClick} />
         )}
       </div>
-      <ul className="list">
+      {menuIsOpen ? (
+        <IoClose
+          className="menu close"
+          onClick={() => setMenuIsOpen(!menuIsOpen)}
+        />
+      ) : (
+        <GiHamburgerMenu
+          className="menu"
+          onClick={() => setMenuIsOpen(!menuIsOpen)}
+        />
+      )}
+
+      <ul className={`list ${menuIsOpen ? "menu-list" : ""}`}>
         <li>{user.firstName[0]}</li>
         <li>
           <h4>

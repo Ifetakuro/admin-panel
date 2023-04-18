@@ -4,17 +4,38 @@ import "../scss/Pages/Tickets.scss";
 import { useState } from "react";
 import TicketForm from "../components/TicketForm";
 import { Role } from "../authentication/Role";
+import { MdAdd } from "react-icons/md";
+import CustomButton from "../components/CustomButton";
+import { useContext } from "react";
+import { AuthContext } from "../authentication/AuthContext";
+import ConfirmDelete from "../components/ConfirmDelete";
+import EditTicketModal from "../components/EditTicketModal";
 
 function Tickets() {
+  const [ticketDescription, setTicketDescription] = useState("");
+  const [ticketTitle, setTicketTitle] = useState("");
+  const [assignee, setAssignee] = useState("");
   const [isNewTicket, setIsNewTicket] = useState(false);
+  const [tickets, setTickets] = useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [ticketId, setTicketId] = useState(null);
+  const [deleting, setdeleting] = useState(false);
+  const [editIsOpen, setEditIsOpen] = useState(false);
+  const [editedTicket, setEditedTicket] = useState({});
+  const [savingEdit, setSavingEdit] = useState(false);
 
   let authRole;
   let ROLE;
+  let assigner;
 
   const _user = localStorage.getItem("user");
 
   if (_user) {
     authRole = JSON.parse(_user).role;
+    let fName = JSON.parse(_user).firstName;
+    let lName = JSON.parse(_user).lastName;
+
+    assigner = fName + " " + lName;
   }
 
   if (authRole === Role.Manager) {
@@ -22,28 +43,155 @@ function Tickets() {
   } else if (authRole === Role.Admin) {
     ROLE = "ADMIN";
   }
+
+  const date = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const id = Math.floor(Math.random() * (9000 - 1000 + 1) + 1000);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTicket = {
+      id: id,
+      title: ticketTitle,
+      description: ticketDescription,
+      assigner: assigner,
+      assignee: assignee,
+      date: date,
+      edited: false,
+    };
+
+    setTickets((prevState) => [newTicket, ...prevState]);
+    setTicketDescription("");
+    setTicketTitle("");
+    setAssignee("");
+  };
+
+  const toggleNewTicket = () => {
+    setIsNewTicket(!isNewTicket);
+  };
+
+  const toggleConfirmDel = () => setConfirmDelete(!confirmDelete);
+  const toggleEditModal = () => setEditIsOpen(!editIsOpen);
+
+  const onOpenDeleteModal = (id) => {
+    toggleConfirmDel();
+    setTicketId(id);
+  };
+
+  const onOpenEditModal = (ticket) => {
+    toggleEditModal();
+    setEditedTicket(ticket);
+  };
+
+  const onDeleteHandler = () => {
+    setdeleting(true);
+
+    setTimeout(() => {
+      setdeleting(false);
+      toggleConfirmDel();
+
+      setTickets((prevState) =>
+        prevState.filter((ticket) => ticket.id !== ticketId)
+      );
+    }, 1000);
+  };
+
+  const onSaveEditedTicket = (id, updatedTicket) => {
+    setSavingEdit(true);
+
+    const updatedTickets = tickets.map((ticket) =>
+      ticket.id === id ? updatedTicket : ticket
+    );
+
+    setTimeout(() => {
+      setSavingEdit(false);
+      toggleEditModal();
+
+      setTickets(updatedTickets);
+    }, 1000);
+  };
+
   return (
-    <main>
-      {ROLE && (
+    <div className="tickets">
+      {confirmDelete && (
+        <ConfirmDelete
+          onHideDelete={toggleConfirmDel}
+          onCancel={toggleConfirmDel}
+          onDelTicket={onDeleteHandler}
+          deleting={deleting}
+        />
+      )}
+      {editIsOpen && (
+        <EditTicketModal
+          onHideEdit={toggleEditModal}
+          editedTicket={editedTicket}
+          onSaveEdit={onSaveEditedTicket}
+          submitting={savingEdit}
+          onClick={toggleEditModal}
+        />
+      )}
+      {ROLE ? (
         <div>
-          only manager and admin can add new tickets
-          <button onClick={() => setIsNewTicket(!isNewTicket)}>
-            Add new ticket
-          </button>
-          {isNewTicket && <TicketForm />}
+          {!isNewTicket && (
+            <div>
+              <CustomButton
+                onClick={toggleNewTicket}
+                extraClass={"add-ticket-btn"}
+              >
+                <MdAdd />
+                Add new ticket
+              </CustomButton>
+            </div>
+          )}
+          {isNewTicket && (
+            <TicketForm
+              title={"Create New Ticket"}
+              onClick={toggleNewTicket}
+              ticketDescription={ticketDescription}
+              setTicketDescription={setTicketDescription}
+              ticketTitle={ticketTitle}
+              setTicketTitle={setTicketTitle}
+              assignee={assignee}
+              setAssignee={setAssignee}
+              handleSubmit={handleSubmit}
+              extraClass={"slide"}
+            />
+          )}
+        </div>
+      ) : (
+        <div>
+          <p>Ask admin or manager to assign tickets to you</p>
         </div>
       )}
 
-      <div className="tickets">
-        <TicketCard />
-        <TicketCard />
-        <TicketCard />
-        <TicketCard />
-        <TicketCard />
-        <TicketCard />
-        <TicketCard />
-      </div>
-    </main>
+      <hr />
+
+      {tickets.length > 0 ? (
+        <div className="ticket-cards">
+          {tickets?.map((ticket) => (
+            <TicketCard
+              key={ticket.id}
+              title={ticket.title}
+              description={ticket.description}
+              assigner={ticket.assigner}
+              assignee={ticket.assignee}
+              date={ticket.date}
+              onDeleteClick={() => onOpenDeleteModal(ticket.id)}
+              onEditClick={() => onOpenEditModal(ticket)}
+              edited={ticket.edited}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="no-tickets">
+          <p>No tickets assigned</p>
+        </div>
+      )}
+    </div>
   );
 }
 

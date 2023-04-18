@@ -2,7 +2,7 @@
   background: #fff;
   width: 3.5rem;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
+  transition: all 0.5s;
   overflow: hidden;
   position: fixed;
   bottom: 0;
@@ -24,7 +24,7 @@
       gap: 1.2rem;
       color: #333;
       border-left: 5px solid transparent;
-      transition: all 1s;
+      transition: all 0.5s;
       font-weight: 500;
       text-decoration: none;
       white-space: nowrap;
@@ -46,12 +46,12 @@
     }
   }
 
-  @media screen and (min-width: 1024px) {
-    width: 250px;
+  &.showbar {
+    width: 15rem;
+    transition: all 0.3s;
   }
-}
 
-.sidebar.showbar {
-  width: 250px;
-  transition: all 0.3s;
+  @media screen and (max-width: 1024px) {
+    width: 3.5rem !important;
+  }
 }

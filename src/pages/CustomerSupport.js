@@ -21,7 +21,7 @@ const CustomerSupport = () => {
     <PermissionedPage roleRequired={role}>
       <div className="user-mgt">
         <h1>Welcome Customer Support!</h1>
-        Admin and Manager has access to this page
+        Admin and Manager have access to this page
       </div>
     </PermissionedPage>
   );

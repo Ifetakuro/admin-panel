@@ -1,0 +1,49 @@
+.confirm-delete {
+  width: 20rem;
+  margin: auto;
+  left: calc(50% - 10rem);
+
+  h4 {
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .svg {
+    // padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      font-size: 2rem;
+      color: rgb(200, 71, 71);
+      margin: 1rem 0;
+    }
+  }
+
+  .btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.57rem;
+    margin: 1rem auto 0;
+
+    button {
+      width: 5rem;
+      color: #fff;
+
+      &:hover {
+        &:enabled {
+          opacity: 0.95;
+        }
+      }
+
+      &:nth-last-of-type(1) {
+        background-color: rgb(200, 71, 71);
+      }
+      &:nth-last-of-type(2) {
+        background-color: #232d42;
+      }
+    }
+  }
+}

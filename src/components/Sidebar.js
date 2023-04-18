@@ -5,6 +5,7 @@ import { FaUsersCog } from "react-icons/fa";
 import { MdSupportAgent } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { BiTask } from "react-icons/bi";
+import { GrTransaction } from "react-icons/gr";
 
 const CustomNavLink = ({ to, ...props }) => {
   return (
@@ -58,6 +59,12 @@ const Sidebar = ({ collaspe }) => {
             <span>Customer Support</span>
           </CustomNavLink>
         )}
+        <CustomNavLink to={"./transactions"}>
+          <span>
+            <GrTransaction />
+          </span>
+          <span>Transactions</span>
+        </CustomNavLink>
       </nav>
     </div>
   );

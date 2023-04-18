@@ -1,27 +1,25 @@
+import { lazy } from "react";
 import {
   BrowserRouter,
   Navigate,
   Outlet,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import CustomerSupport from "./pages/CustomerSupport";
-import UserManagement from "./pages/UserManagement";
 import Layout from "./components/Layout";
-import NotFound from "./pages/404";
-import { Suspense } from "react";
-import { AuthContext, AuthProvider } from "./authentication/AuthContext";
-import { useContext } from "react";
-import Login from "./pages/Login";
-import ProtectedRoutes from "./authentication/ProtectedRoute";
-import AccessDenied from "./pages/AccessDenied";
-import Tickets from "./pages/Tickets";
+import { AuthProvider } from "./authentication/AuthContext";
 
-const PrivateRoutes = ({ children, ...rest }) => {
+const Login = lazy(() => import("./pages/Login"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Tickets = lazy(() => import("./pages/Tickets"));
+const UserManagement = lazy(() => import("./pages/UserManagement"));
+const CustomerSupport = lazy(() => import("./pages/CustomerSupport"));
+const Transaction = lazy(() => import("./pages/Transaction"));
+const NotFound = lazy(() => import("./pages/404"));
+const AccessDenied = lazy(() => import("./pages/AccessDenied"));
+
+const PrivateRoutes = () => {
   let auth;
-  const navigate = useNavigate();
 
   const _user = localStorage.getItem("user");
   if (_user) {
@@ -39,31 +37,26 @@ const PrivateRoutes = ({ children, ...rest }) => {
 
 function App() {
   return (
-    <Suspense fallback={"..loading"}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Login />} path={"/login"} exact />
-            <Route element={<PrivateRoutes />}>
-              <Route element={<Dashboard />} path="/" exact />
-              <Route
-                element={<UserManagement />}
-                exact
-                path="/user-management"
-              />
-              <Route
-                element={<CustomerSupport />}
-                path="/customer-support"
-                exact
-              />
-              <Route element={<Tickets />} path="/tickets" exact />
-            </Route>
-            <Route element={<NotFound />} path={"*"} exact />
-            <Route element={<AccessDenied />} path={"./access-denied"} exact />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    </Suspense>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Login />} path={"/login"} exact />
+          <Route element={<PrivateRoutes />}>
+            <Route element={<Dashboard />} path="/" exact />
+            <Route element={<Tickets />} path="/tickets" exact />
+            <Route element={<UserManagement />} exact path="/user-management" />
+            <Route
+              element={<CustomerSupport />}
+              path="/customer-support"
+              exact
+            />
+            <Route element={<Transaction />} path="/transactions" exact />
+          </Route>
+          <Route element={<AccessDenied />} path={"./access-denied"} exact />
+          <Route element={<NotFound />} path={"*"} exact />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

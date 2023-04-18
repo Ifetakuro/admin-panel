@@ -1,8 +1,33 @@
 .tickets {
-  display: grid;
-  grid-template: auto / repeat(auto-fit, minmax(15rem, 1fr));
-  //   display: flex;
-  //   align-items: center;
-  //   flex-wrap: wrap;
-  gap: 1rem;
+  .add-ticket-btn {
+    width: 11rem;
+    height: 3rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin: 1rem 0 2rem auto;
+    svg {
+      font-size: 1.4rem;
+    }
+  }
+
+  hr {
+    border-color: rgba(124, 120, 120, 0.15);
+  }
+
+  .ticket-cards {
+    display: grid;
+    grid-template: auto / repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .no-tickets {
+    text-align: center;
+    margin: 3rem auto;
+
+    p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
 }

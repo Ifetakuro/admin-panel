@@ -1,0 +1,108 @@
+.ticket-form-div {
+  margin: 0 0 3rem;
+
+  .ticket-fh {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .ticket-form {
+    max-width: 500px;
+    margin: 1rem auto;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 1rem auto;
+
+      input,
+      textarea,
+      select {
+        outline: none;
+        border: 2px solid #3a57e847;
+        border-radius: 0.3rem;
+        padding: 0.5rem;
+        width: 100% !important;
+
+        &:focus {
+          border-color: #3a57e89b;
+        }
+      }
+
+      textarea {
+        min-height: 5rem;
+        resize: none;
+      }
+    }
+    .btn-div {
+      flex-direction: row;
+      width: 100%;
+      margin: 1.3rem 0 2rem;
+
+      button {
+        width: 8rem;
+        height: 2.5rem;
+        color: #fff;
+        font-weight: 600;
+
+        &:hover {
+          &:enabled {
+            opacity: 0.95;
+          }
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+
+        &:nth-last-of-type(1) {
+          background-color: #232d42;
+        }
+
+        &:nth-last-of-type(2) {
+          background-color: #3a57e8;
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+    }
+  }
+
+  &.slide {
+    animation-name: slideDown;
+    -webkit-animation-name: slideDown;
+    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.5s;
+    animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+    visibility: visible !important;
+
+    @keyframes slideDown {
+      0% {
+        transform: translateY(-100%);
+      }
+      50% {
+        transform: translateY(5%);
+      }
+
+      100% {
+        transform: translateY(0%);
+      }
+    }
+
+    @-webkit-keyframes slideDown {
+      0% {
+        transform: translateY(-100%);
+      }
+      50% {
+        transform: translateY(50%);
+      }
+      100% {
+        transform: translateY(0%);
+      }
+    }
+  }
+}

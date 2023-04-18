@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
     <div className={"layout"}>
       <Header collapse={toggleBtn} onClick={() => setToggleBtn(!toggleBtn)} />
       <Sidebar collaspe={toggleBtn} />
-      <div className="content">{children}</div>
+      <main className="content">{children}</main>
     </div>
   );
 };

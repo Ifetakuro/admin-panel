@@ -1,0 +1,12 @@
+.edit-ticket-modal {
+  width: 30rem;
+  margin: 0;
+  top: calc(20%);
+  left: calc(50% - 15rem);
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    left: 10%;
+    height: 25rem;
+  }
+}
