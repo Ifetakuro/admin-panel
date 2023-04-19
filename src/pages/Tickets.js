@@ -10,6 +10,8 @@ import { useContext } from "react";
 import { AuthContext } from "../authentication/AuthContext";
 import ConfirmDelete from "../components/ConfirmDelete";
 import EditTicketModal from "../components/EditTicketModal";
+import { json } from "react-router-dom";
+import { useEffect } from "react";
 
 function Tickets() {
   const [ticketDescription, setTicketDescription] = useState("");
@@ -29,6 +31,7 @@ function Tickets() {
   let assigner;
 
   const _user = localStorage.getItem("user");
+  const _tickets = JSON.parse(localStorage.getItem("tickets"));
 
   if (_user) {
     authRole = JSON.parse(_user).role;
@@ -65,6 +68,11 @@ function Tickets() {
     };
 
     setTickets((prevState) => [newTicket, ...prevState]);
+    if (_tickets) {
+      localStorage.setItem("tickets", JSON.stringify([newTicket, ..._tickets]));
+    } else {
+      localStorage.setItem("tickets", JSON.stringify([newTicket]));
+    }
     setTicketDescription("");
     setTicketTitle("");
     setAssignee("");
@@ -98,6 +106,16 @@ function Tickets() {
         prevState.filter((ticket) => ticket.id !== ticketId)
       );
     }, 1000);
+
+    if (_tickets.length > 1) {
+      const removedDeletedTicket = _tickets;
+      const index = _tickets.findIndex((ticket) => ticket.id === ticketId);
+      removedDeletedTicket.splice(0, index);
+      localStorage.setItem("tickets", JSON.stringify(removedDeletedTicket));
+    }
+    if (_tickets.length === 1) {
+      localStorage.removeItem("tickets");
+    }
   };
 
   const onSaveEditedTicket = (id, updatedTicket) => {
@@ -112,8 +130,15 @@ function Tickets() {
       toggleEditModal();
 
       setTickets(updatedTickets);
+      localStorage.setItem("tickets", JSON.stringify(updatedTickets));
     }, 1000);
   };
+
+  useEffect(() => {
+    if (_tickets) {
+      setTickets(_tickets);
+    }
+  }, []);
 
   return (
     <div className="tickets">
@@ -184,6 +209,7 @@ function Tickets() {
               onDeleteClick={() => onOpenDeleteModal(ticket.id)}
               onEditClick={() => onOpenEditModal(ticket)}
               edited={ticket.edited}
+              role={authRole}
             />
           ))}
         </div>

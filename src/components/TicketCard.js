@@ -11,6 +11,7 @@ function TicketCard({
   onDeleteClick,
   onEditClick,
   edited,
+  role,
 }) {
   return (
     <div className="ticket-card">
@@ -18,10 +19,12 @@ function TicketCard({
         <h3>
           {title} {edited && <span>(Edited)</span>}
         </h3>
-        <div className="ticket-card-btn">
-          <MdEdit onClick={onEditClick} />
-          <RiDeleteBinFill onClick={onDeleteClick} />
-        </div>
+        {role !== "DEVELOPER" && (
+          <div className="ticket-card-btn">
+            <MdEdit onClick={onEditClick} />
+            <RiDeleteBinFill onClick={onDeleteClick} />
+          </div>
+        )}
       </div>
       <div className="description">
         <p>{description}</p>
